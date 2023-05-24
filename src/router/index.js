@@ -1,23 +1,28 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import Home from "../views/Home.vue";
+import VideoPlayer from "../views/VideoPlayer.vue";
+import SearchResult from "../views/SearchResult.vue";
+import store from '../store'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: HomeView
+    path:"/",
+    name: "homePage",
+    component: Home
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-  }
+    path: "/play-video/:id",
+    name: "videoPlayer",
+    component: VideoPlayer
+  },
+  {
+    path: "/search-result",
+    name: "searchResult",
+    component: SearchResult
+  },
 ]
 
 const router = new VueRouter({
@@ -26,4 +31,14 @@ const router = new VueRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  if (to.path === '/' || to.path === '/search-result') {
+    store.state.hideSidebar = false;
+    store.state.drawer = true;
+  } else {
+    store.state.hideSidebar = true;
+    store.state.drawer = true;
+  }
+  next();
+});
 export default router

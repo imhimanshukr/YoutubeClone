@@ -1,32 +1,48 @@
 <template>
-  <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
-  </div>
+  <v-app>
+    <Navbar/>
+    <div class="d-flex">
+      <Sidebar/>
+      <v-row>
+        <v-col cols="12">
+          <v-main class="main-container" :class="$vuetify.theme.dark ? 'dark-theme' : 'light-theme'">
+            <router-view/>
+          </v-main>
+        </v-col>
+      </v-row>
+      </div>
+  </v-app>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+import Navbar from "../src/components/NavBar.vue"
+import Sidebar from "../src/components/SideBar.vue"
+
+export default {
+  name: 'App',
+
+  data: () => ({
+    darkMode: false,
+    windowUrl: "",
+  }),
+  methods: {
+    toggleTheme () {
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+    }
+  },
+  components:{
+    Navbar,
+    Sidebar,
+  }
+};
+</script>
+
+<style scoped>
+.dark-theme{
+  background-color: #0F0F0F;
+}
+.light-theme{
+  background-color: #fff;
 }
 
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>

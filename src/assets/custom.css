@@ -1,0 +1,104 @@
+/* Custom */
+body {
+    overflow: hidden;
+    font-family: 'Roboto', sans-serif;
+}
+html {
+    font-size: 62.5%;
+}
+.pointer {
+    cursor: pointer;
+}
+.light-btn {
+    background-color: #F2F2F2;
+    color:#0F0F0F
+}
+.dark-btn {
+    background-color: #272727;
+    color:#F2F2F2
+}
+.light-theme-primarytext {
+    color: #0F0F0F !important;
+}
+.light-theme-secondarytext {
+    color: #787878;
+}
+.dark-theme-primarytext {
+    color: #F1F1F1 !important;
+}
+.dark-theme-secondarytext {
+    color: #8C8C8C;
+}
+.nowrap {
+    white-space: nowrap;
+}
+.break-spaces {
+    white-space:break-spaces;
+}
+.scroll-vertical-hide {
+    overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.scroll-vertical-hide::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+/* Fonts */
+.fs-10 {
+    font-size: 1rem !important;
+}
+.fs-12 {
+    font-size: 1.2rem !important;
+}
+.fs-14 {
+    font-size: 1.4rem !important;
+}
+.fs-16 {
+    font-size: 1.6rem !important;
+}
+.fs-18 {
+    font-size: 1.8rem !important;
+}
+.fs-20 {
+    font-size: 2rem !important;
+}
+.fs-26 {
+    font-size: 2.6rem !important;
+}
+.fw-400 {
+    font-weight: 400;
+}
+.fw-500 {
+    font-weight: 500;
+}
+.fw-600 {
+    font-weight: 600;
+}
+/* Media Query */
+@media screen and (max-width: 998px) {
+    html {
+        font-size: 55%;
+    }
+}
+@media screen and (max-width: 768px) {
+    html {
+        font-size: 45%;
+    }
+}
+@media screen and (max-width: 600px) {
+    .hide-on-mobile{
+        display: none;
+    }
+    
+}
+
+.v-autocomplete__content.v-menu__content{
+    border-radius: 10px !important;
+    margin-top: 5px;
+}
+.v-autocomplete__content.v-menu__content::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
