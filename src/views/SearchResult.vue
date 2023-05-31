@@ -22,16 +22,16 @@
     }}</p>
                         </div>
                         <div class="d-flex align-center mt-2">
-                            <v-avatar class="h-9 w-9 rounded-full mr-2 overflow-hidden" size="25">
+                            <v-avatar class="h-9 w-9 rounded-full mr-2 overflow-hidden pointer" size="25" @click="viewChannel(item.video.author.channelId, item.video.author.canonicalBaseUrl)">
                                 <v-img :src="item.video.author.avatar[0].url" :alt="item.video.author.title" />
                             </v-avatar>
-                            <p class="fs-12 mb-0"
-                                :class="$vuetify.theme.dark ? 'dark-theme-secondarytext' : 'light-theme-secondarytext'">{{
+                            <p class="fs-12 mb-0 pointer"
+                                :class="$vuetify.theme.dark ? 'dark-theme-secondarytext' : 'light-theme-secondarytext'" @click="viewChannel(item.video.author.channelId, item.video.author.canonicalBaseUrl)">{{
                                     item.video.author.title }}</p>
                             <v-icon
                                 v-if="item.video.author.badges.length > 0 ? item.video.author.badges[0].type === 'VERIFIED_CHANNEL' : false"
-                                class="fs-12 ml-1"
-                                :class="$vuetify.theme.dark ? 'dark-theme-secondarytext' : 'light-theme-secondarytext'">mdi-check-decagram</v-icon>
+                                class="fs-12 ml-1 pointer"
+                                :class="$vuetify.theme.dark ? 'dark-theme-secondarytext' : 'light-theme-secondarytext'" @click="viewChannel(item.video.author.channelId, item.video.author.canonicalBaseUrl)">mdi-check-decagram</v-icon>
                         </div>
                         <p class="fs-12 mb-0 pointer" @click="playVideo(item.video.videoId)">{{
                             item.video.descriptionSnippet }}</p>
@@ -94,6 +94,16 @@ export default {
                     id: videoId
                 }
             })
+        },
+        viewChannel(channelId, baseUrl){
+          console.log("baseUrl: ", baseUrl);
+          this.$router.push({
+            name: "channelDetails",
+            params:{
+              id: baseUrl.replace("/", ""),
+              channelId
+            }
+          })
         }
     },
     computed: {

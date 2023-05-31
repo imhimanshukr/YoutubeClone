@@ -3,7 +3,7 @@
     <Navbar/>
     <div class="d-flex">
       <Sidebar/>
-      <v-row>
+      <v-row :class="$vuetify.theme.dark ? 'dark-bg' : 'light-bg'">
         <v-col cols="12">
           <v-main class="main-container" :class="$vuetify.theme.dark ? 'dark-theme' : 'light-theme'">
             <router-view/>

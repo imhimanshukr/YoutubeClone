@@ -29,6 +29,12 @@ html {
 .dark-theme-secondarytext {
     color: #8C8C8C;
 }
+.dark-bg {
+    background-color: #0F0F0F !important;
+}
+.light-bg{
+    background-color: #fff !important;
+}
 .nowrap {
     white-space: nowrap;
 }
@@ -39,6 +45,7 @@ html {
     overflow-x: hidden;
   overflow-y: auto;
 }
+
 
 .scroll-vertical-hide::-webkit-scrollbar {
   width: 0;
@@ -55,8 +62,14 @@ html {
 .fs-14 {
     font-size: 1.4rem !important;
 }
+.fsn-14 {
+    font-size: 14px!important;
+}
 .fs-16 {
     font-size: 1.6rem !important;
+}
+.fsn-16 {
+    font-size: 16px !important;
 }
 .fs-18 {
     font-size: 1.8rem !important;
@@ -64,8 +77,14 @@ html {
 .fs-20 {
     font-size: 2rem !important;
 }
+.fs-24 {
+    font-size: 24px !important;
+}
 .fs-26 {
     font-size: 2.6rem !important;
+}
+.fsn-26 {
+    font-size: 26px !important;
 }
 .fw-400 {
     font-weight: 400;
@@ -75,6 +94,9 @@ html {
 }
 .fw-600 {
     font-weight: 600;
+}
+.fw-700 {
+    font-weight: 700;
 }
 /* Media Query */
 @media screen and (max-width: 998px) {
@@ -101,4 +123,8 @@ html {
 .v-autocomplete__content.v-menu__content::-webkit-scrollbar {
     width: 0;
     height: 0;
+  }
+  ::v-deep .v-menu__content{
+    top: 62px !important;
+      left: 1213px !important;
   }

@@ -13,10 +13,10 @@
                 <div class="d-flex flex-wrap mt-3 justify-space-between">
                     <div class="d-flex align-center justify-space-between head-w-100">
                         <div class="d-flex align-center">
-                            <v-avatar class="h-9 w-9 rounded-full overflow-hidden mr-3" size="40">
+                            <v-avatar class="h-9 w-9 rounded-full overflow-hidden mr-3 pointer" size="40" @click="viewChannel(videoDetail.author.channelId, videoDetail.author.canonicalBaseUrl)">
                                 <v-img :src="videoDetail.author.avatar[0].url" :alt="videoDetail.author.title" />
                             </v-avatar>
-                            <div class="">
+                            <div class="pointer" @click="viewChannel(videoDetail.author.channelId, videoDetail.author.canonicalBaseUrl)">
                                 <p class="fs-14 mb-0 nowrap fw-600" :class="$vuetify.theme.dark
                                     ? 'dark-theme-primarytext'
                                     : 'light-theme-primarytext'
@@ -36,8 +36,8 @@
                                 </p>
                             </div>
                         </div>
-                        <v-btn max-width="9.5rem" max-height="3.6rem" class="ml-6 fs-12 rounded-xl text-capitalliz"
-                            elevation="0" :class="$vuetify.theme.dark ? 'black--text' : 'white--text'" :color="$vuetify.theme.dark ? '#f2f2f2' : '#252525'">Subscribe</v-btn>
+                        <v-btn max-width="10.5rem" max-height="3.6rem" class="ml-6 fs-12 rounded-xl text-capitalliz"
+                            elevation="0" :class="$vuetify.theme.dark ? 'black--text' : 'white--text'" :color="$vuetify.theme.dark ? '#f2f2f2' : '#252525'" @click="isSubscribe = !isSubscribe">{{ isSubscribe ? 'Subscribeed' : 'Subscribe'}}</v-btn>
                     </div>
                     <div class="d-flex align-center head-w-100 justify-space-between">
                         <v-btn-toggle v-model="toggle_exclusive" rounded :outlined="true">
@@ -220,6 +220,7 @@ export default {
         showCommentBtn: false,
         userComment: null,
         showCommentList: false,
+        isSubscribe: false,
     }),
     mounted() {
         this.videoId = window.location.pathname.match(/play-video\/(.*)/)[1];
@@ -275,6 +276,16 @@ export default {
             })
             this.showCommentBtn = false;
             this.userComment = null;
+        },
+        viewChannel(channelId, baseUrl){
+          console.log("baseUrl: ", baseUrl);
+          this.$router.push({
+            name: "channelDetails",
+            params:{
+              id: baseUrl.replace("/", ""),
+              channelId
+            }
+          })
         }
     },
     computed: {

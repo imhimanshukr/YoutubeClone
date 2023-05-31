@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-app-bar color="mainBg" elevation="0" class="navbar">
+    <v-app-bar color="mainBg" elevation="0" class="navbar mb-sm-0 mb-1">
       <v-icon
-        class="fs-26 pointer ml-0 ml-sm-2 mr-5"
+        class="fsn-26 pointer ml-0 ml-sm-2 mr-sm-5"
         color="primaryText"
         @click.stop="$store.state.drawer = !$store.state.drawer"
         >mdi-menu</v-icon
@@ -13,7 +13,7 @@
         class="pointer"
         src="../assets/dark-logo.png"
         alt="logo"
-        v-if="$vuetify.theme.dark"
+        v-if="$vuetify.theme.dark && !$vuetify.breakpoint.xs"
         @click="goToHome"
       />
       <img
@@ -21,10 +21,10 @@
         class="pointer"
         src="../assets/light-logo.png"
         alt="logo"
-        v-if="!$vuetify.theme.dark"
+        v-if="!$vuetify.theme.dark && !$vuetify.breakpoint.xs"
         @click="goToHome"
       />
-
+      <img src="../assets/youtube-logo.png" width="40px" class="mx-3" alt="logo" v-if="$vuetify.breakpoint.xs" @click="goToHome">
       <v-spacer></v-spacer>
 
       <v-autocomplete
@@ -32,11 +32,12 @@
         :search-input.sync="search"
         clearable
         dense
-        outlined
+        :outlined="!$vuetify.breakpoint.xs"
         rounded
         hide-details
         hide-no-data
         hide-selected
+        :filled="$vuetify.breakpoint.xs"
         placeholder="Search"
         @change="selectSearchItem"
       >
@@ -46,12 +47,12 @@
       </v-autocomplete>
 
       <v-spacer></v-spacer>
-      <v-btn icon>
+      <v-btn icon v-if="!$vuetify.breakpoint.xs">
         <v-icon>{{
           $vuetify.theme.dark ? "mdi-video-plus" : "mdi-video-plus-outline"
         }}</v-icon>
       </v-btn>
-      <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark">
+      <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark"  v-if="!$vuetify.breakpoint.xs">
         <v-icon>mdi-bell-outline</v-icon>
       </v-btn>
 
@@ -68,7 +69,7 @@
 
         <v-list>
           <v-list-item v-for="n in 5" :key="n" @click="() => {}">
-            <v-list-item-title>Option {{ n }}</v-list-item-title>
+            <v-list-item-title  @click="$vuetify.theme.dark = !$vuetify.theme.dark">Option {{ n }}</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -147,4 +148,5 @@ export default {
 ::v-deep .v-autocomplete__content.v-menu__content {
   border-radius: 30px !important;
 }
+
 </style>

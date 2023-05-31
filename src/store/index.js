@@ -15,6 +15,9 @@ export default new Vuex.Store({
     videoComments: [],
     autoCompleteData: [],
     selectedSearch:"",
+    channelDetail: [],
+    channelVideos: [],
+    channelCommunity: [],
   },
   getters: {
   },
@@ -39,6 +42,15 @@ export default new Vuex.Store({
     },
     setSelectedSearch(state, value) {
       state.selectedSearch = value;
+    },
+    setChannelDetail(state, detail) {
+      state.channelDetail = detail;
+    },
+    setChannelVideos(state, videos) {
+      state.channelVideos = videos;
+    },
+    setChannelCommunity(state, communityPost) {
+      state.channelCommunity = communityPost;
     },
   },
   actions: {
@@ -83,6 +95,30 @@ export default new Vuex.Store({
         console.log("data.autoComplete: ", data.autoComplete);
         commit("setAutoComplete", data.autoComplete);
       }, typingDelay)
-    }
+    },
+    async fetchChannelDetail({commit}, channelId){
+      // const response = await fetchDataFromApi(`channel/details/?id=${channelId}`);
+      // commit("setChannelDetail", response)
+      // console.log("setChannelDetail", response)
+      commit("setFeedTitle", channelId);
+      commit("setChannelDetail", data.channelDetail)
+      console.log("setChannelDetail", data.channelDetail)
+    },
+    async fetchChannelVideos({commit}, channelId){
+      // const response = await fetchDataFromApi(`channel/details/?id=${channelId}`);
+      // commit("setChannelVideos", response.contents)
+      // console.log("setChannelDetail", response.contents)
+      commit("setFeedTitle", channelId);
+      commit("setChannelVideos", data.channelVideos)
+      console.log("setChannelVideos", data.channelVideos)
+    },
+    async fetchChannelCommunity({commit}, channelId){
+      // const response = await fetchDataFromApi(`channel/community/?id=${channelId}`);
+      // commit("setChannelCommunity", response.contents)
+      // console.log("setChannelCommunity", response.contents)
+      commit("setFeedTitle", channelId);
+      commit("setChannelCommunity", data.channelCommunity)
+      console.log("setChannelCommunity", data.channelCommunity)
+    },
   },
 })
