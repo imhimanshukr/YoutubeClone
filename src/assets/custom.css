@@ -124,7 +124,3 @@ html {
     width: 0;
     height: 0;
   }
-  ::v-deep .v-menu__content{
-    top: 62px !important;
-      left: 1213px !important;
-  }

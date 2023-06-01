@@ -55,7 +55,7 @@
                                 <v-card color="mainBg" elevation="0">
                                     <h1>{{ item.content }}</h1>
                                     <!-- Home tab -->
-                                    <div v-show="item.tab === 'Home'" class="mt-7">
+                                    <div v-show="item.tab === 'Home'" class="pt-7">
                                         <v-row class="mb-5 scroll-vertical-hide v-height" v-if="channelVideos.length > 1">
                                             <v-col class="py-sm-0 py-1" cols="12" v-for="(item, index) in channelVideos.slice(0, 1)"
                                             :key="index">
@@ -63,9 +63,9 @@
                                         </v-col>
                                     </v-row>
                                         <v-divider></v-divider>
-                                        <p class="fs-16 mt-3 fw-600">Videos</p>
+                                        <p class="fs-16 pt-3 fw-600">Videos</p>
                                         <v-row class="mt-0 ml-0 ml-sm-3 mr-0 mr-xs-2 scroll-vertical-hide v-height" v-if="channelVideos.length > 1">
-                                            <v-col class="py-sm-2 px-0 py-1" cols="12" md="3" sm="6" v-for="(item, index) in channelVideos.slice(1, channelVideos.length - 1)"
+                                            <v-col class="py-sm-2 py-1" cols="12" md="3" sm="6" v-for="(item, index) in channelVideos.slice(1, channelVideos.length - 1)"
                                             :key="index">
                                             <VideoCard :video="item.video" :isDetail=true />
                                         </v-col>
@@ -73,7 +73,7 @@
                                 <p class="fsn-16 text-center my-16" v-else>This channel has not any video.</p>
                                 </div>
                                     <!-- Videos tab -->
-                                    <div v-show="item.tab === 'Videos'" class="mt-4">
+                                    <div v-show="item.tab === 'Videos'" class="pt-4">
                                         <v-row class="mt-0 ml-0 ml-sm-3 mr-0 mr-xs-2 scroll-vertical-hide v-height" v-if="channelVideos.length > 0">
                                             <v-col class="py-sm-0 py-1" cols="12" md="3" sm="6" v-for="(item, index) in channelVideos"
                                             :key="index">
@@ -85,7 +85,7 @@
                                 <!-- Playlist tab -->
                                 <p class="fsn-16 text-center my-16" v-show="item.tab === 'Playlist'">Sorry, playlist details are not available.</p>
                                 <!-- Community tab -->
-                                <div v-show="item.tab === 'Community'" class="mt-4">
+                                <div v-show="item.tab === 'Community'" class="pt-4">
                                 <v-row v-if="communityPost.length > 0">
                                     <v-col cols="12" v-for="(post, index) in communityPost" :key="index">
                                         <CommunityTab :communityPost="post"/>
