@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 import VideoPlayer from "../views/VideoPlayer.vue";
 import SearchResult from "../views/SearchResult.vue";
 import ChannelDetails from "../views/ChannelDetails.vue";
+import Login from "../views/Login.vue";
 import store from '../store'
 
 Vue.use(VueRouter)
@@ -11,6 +12,11 @@ Vue.use(VueRouter)
 const routes = [
   {
     path:"/",
+    name: "loginPage",
+    component: Login
+  },
+  {
+    path:"/home",
     name: "homePage",
     component: Home
   },

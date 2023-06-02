@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div class="d-flex mb-2" v-for="(item, index) in videoList" :key="index">
+        <div class="d-flex mb-2" v-for="(item, index) in videoList" :key="index" @click="playVideo(item.video.videoId)">
             <v-row>
-                <v-col cols="5" class="pr-0"  @click="playVideo(item.video.videoId)">
+                <v-col cols="5" class="pr-0">
                     <v-img class="rounded-lg img-width pointer" :src="item.video.thumbnails[0].url" :alt="item.video.title">
                         <span class="video-length">{{ formatVideoLength(item.video.lengthSeconds) }}</span>
                     </v-img>
@@ -10,9 +10,9 @@
                 <v-col cols="7" class="pl-0">
                     <div class="ml-2">
                         <h3 class="fs-14 break-spaces"
-                            :class="$vuetify.theme.dark ? 'dark-theme-primarytext' : 'light-theme-primarytext'"  @click="playVideo(item.video.videoId)">{{textTruncate(item.video.title) }}
+                            :class="$vuetify.theme.dark ? 'dark-theme-primarytext' : 'light-theme-primarytext'">{{textTruncate(item.video.title) }}
                         </h3>
-                        <div class="d-flex align-center">
+                        <div class="d-flex align-center pointer">
                             <p class="fs-12 mb-0"
                                 :class="$vuetify.theme.dark ? 'dark-theme-secondarytext' : 'light-theme-secondarytext'">{{
                                     item.video.author.title }}</p>
@@ -23,7 +23,7 @@
                         </div>
                         <div class="d-flex align-center">
                             <p class="fs-12 mb-0"
-                                :class="$vuetify.theme.dark ? 'dark-theme-secondarytext' : 'light-theme-secondarytext'"  @click="playVideo(item.video.videoId)">{{
+                                :class="$vuetify.theme.dark ? 'dark-theme-secondarytext' : 'light-theme-secondarytext'">{{
                                     formatCount(item.video.stats.views) }} views <span>.</span> {{ item.video.publishedTimeText }}</p>
                         </div>
                     </div>
@@ -67,9 +67,6 @@ export default {
         playVideo(videoId){
             console.log("videoId: ", videoId);
             console.log("window.location.pathname: ", window.location.pathname);
-            // window.location.pathname = `play-video/${videoId}`
-            // window.location.reload()
-            // console.log("wwww: ", window.location.pathname.split("/"));
             this.$router.push({
                 name: "videoPlayer",
                 params:{
@@ -77,7 +74,7 @@ export default {
                     videoId
                 }
             })
-        }
+        },
     },
     computed: {
         videoList() {

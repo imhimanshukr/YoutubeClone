@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-// import { fetchDataFromApi } from '@/api';
+import { fetchDataFromApi } from '@/api';
 import data from "./dummy.JSON";
 
 Vue.use(Vuex)
@@ -57,29 +57,37 @@ export default new Vuex.Store({
     async fetchVideoDetail({commit}, videoId) {
       console.log("VI: ", videoId);
       console.log("VI Detail: ", data.desc);
-      // const response = await fetchDataFromApi(`video/details/?id=${videoId}`);
-      // console.log("recommendationFeedTitle: ", response);
-      commit("setVideoDetail", data.desc);
+      const response = await fetchDataFromApi(`video/details/?id=${videoId}`);
+      console.log("recommendationFeedTitle: ", response);
+      commit("setVideoDetail", response);
+
+      // commit("setVideoDetail", data.desc);
     },
     async fetchVideos({ commit }, query) {
-    //   const response = await fetchDataFromApi(`search/?q=${query}`);
-      // console.log("videos: ", response.contents);
-    console.log("videos list: ", data.videos);
-      commit("setFeedTitle", query);
-      commit("setVideos", data.videos);
+      const response = await fetchDataFromApi(`search/?q=${query}`);
+      console.log("videos: ", response.contents);
+        commit("setVideos", response.contents);
+      
+      console.log("videos list: ", data.videos);
+      //   commit("setVideos", data.videos);
+      //   commit("setFeedTitle", query);
     },
     async fetchRelatedVideos({commit}, videoId){
-        // const response = await fetchDataFromApi(`video/related-contents/?id=${videoId}`);
-        // commit("setRelatedContent", response.contents);
-        console.log("related: ", data.related, videoId);
-      commit("setRelatedContent", data.related);
+        const response = await fetchDataFromApi(`video/related-contents/?id=${videoId}`);
+        commit("setRelatedContent", response.contents);
+          console.log("related: ", response.contents);
+
+      //   console.log("related: ", data.related, videoId);
+      // commit("setRelatedContent", data.related);
 
     },
     async fetchVideoComment({commit}, videoId){
-        // const response = await fetchDataFromApi(`video/comments/?id=${videoId}`);
-        // commit("setVideoComment", response);
-        console.log("data.commentData:", videoId, data.commentData);
-        commit("setVideoComment", data.commentData);
+        const response = await fetchDataFromApi(`video/comments/?id=${videoId}`);
+        commit("setVideoComment", response);
+        console.log("data.commentData:", response);
+
+        // console.log("data.commentData:", videoId, data.commentData);
+        // commit("setVideoComment", data.commentData);
     },
     async fetchAutoCompleteSearch({commit}, query){
       let typingTimer = null;
@@ -88,37 +96,41 @@ export default new Vuex.Store({
       clearTimeout(typingTimer);
 
       typingTimer = setTimeout(async () =>{
-        // const response = await fetchDataFromApi(`auto-complete/?q=${query}`);
-        // console.log("response: ", response);
-        // commit("setAutoComplete", response.results);
-        commit("setFeedTitle", query);
-        console.log("data.autoComplete: ", data.autoComplete);
-        commit("setAutoComplete", data.autoComplete);
+        const response = await fetchDataFromApi(`auto-complete/?q=${query}`);
+        console.log("setAutoComplete: ", response);
+        commit("setAutoComplete", response.results);
+
+        // commit("setFeedTitle", query);
+        // console.log("data.autoComplete: ", data.autoComplete);
+        // commit("setAutoComplete", data.autoComplete);
       }, typingDelay)
     },
     async fetchChannelDetail({commit}, channelId){
-      // const response = await fetchDataFromApi(`channel/details/?id=${channelId}`);
-      // commit("setChannelDetail", response)
-      // console.log("setChannelDetail", response)
-      commit("setFeedTitle", channelId);
-      commit("setChannelDetail", data.channelDetail)
-      console.log("setChannelDetail", data.channelDetail)
+      const response = await fetchDataFromApi(`channel/details/?id=${channelId}`);
+      commit("setChannelDetail", response)
+      console.log("setChannelDetail", response)
+
+      // commit("setFeedTitle", channelId);
+      // commit("setChannelDetail", data.channelDetail)
+      // console.log("setChannelDetail", data.channelDetail)
     },
     async fetchChannelVideos({commit}, channelId){
-      // const response = await fetchDataFromApi(`channel/details/?id=${channelId}`);
-      // commit("setChannelVideos", response.contents)
-      // console.log("setChannelDetail", response.contents)
-      commit("setFeedTitle", channelId);
-      commit("setChannelVideos", data.channelVideos)
-      console.log("setChannelVideos", data.channelVideos)
+      const response = await fetchDataFromApi(`channel/videos/?id=${channelId}`);
+      commit("setChannelVideos", response.contents)
+      console.log("setChannelVideos", response.contents)
+
+      // commit("setFeedTitle", channelId);
+      // commit("setChannelVideos", data.channelVideos)
+      // console.log("setChannelVideos", data.channelVideos)
     },
     async fetchChannelCommunity({commit}, channelId){
-      // const response = await fetchDataFromApi(`channel/community/?id=${channelId}`);
-      // commit("setChannelCommunity", response.contents)
-      // console.log("setChannelCommunity", response.contents)
-      commit("setFeedTitle", channelId);
-      commit("setChannelCommunity", data.channelCommunity)
-      console.log("setChannelCommunity", data.channelCommunity)
+      const response = await fetchDataFromApi(`channel/community/?id=${channelId}`);
+      commit("setChannelCommunity", response.contents)
+      console.log("setChannelCommunity", response.contents)
+
+      // commit("setFeedTitle", channelId);
+      // commit("setChannelCommunity", data.channelCommunity)
+      // console.log("setChannelCommunity", data.channelCommunity)
     },
   },
 })

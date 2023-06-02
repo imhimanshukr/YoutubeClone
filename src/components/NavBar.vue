@@ -21,14 +21,10 @@
       </v-autocomplete>
 
       <v-spacer></v-spacer>
-      <v-btn icon v-if="!$vuetify.breakpoint.xs">
-        <v-icon>{{
+        <v-icon icon v-if="!$vuetify.breakpoint.xs">{{
           $vuetify.theme.dark ? "mdi-video-plus" : "mdi-video-plus-outline"
         }}</v-icon>
-      </v-btn>
-      <v-btn icon @click="$vuetify.theme.dark = !$vuetify.theme.dark" v-if="!$vuetify.breakpoint.xs">
-        <v-icon>mdi-bell-outline</v-icon>
-      </v-btn>
+        <v-icon class="mx-3" v-if="!$vuetify.breakpoint.xs">mdi-bell-outline</v-icon>
 
       <v-menu left :offset-x=true :offset-y=true max-width="300">
         <template v-slot:activator="{ on, attrs }">
@@ -66,11 +62,13 @@
           >
             <v-list-item-icon>
               <v-icon v-text="item.icon" v-if="!item.text === 'Appearance'"></v-icon>
+              <v-icon v-text="item.icon" v-else-if="item.text === 'Logout'" @click="logout"></v-icon>
               <v-icon v-text="item.icon" v-else @click="$vuetify.theme.dark = !$vuetify.theme.dark"></v-icon>
             </v-list-item-icon>
 
             <v-list-item-content>
               <v-list-item-title v-if="item.text === 'Appearance'" @click="$vuetify.theme.dark = !$vuetify.theme.dark"><span class="fw-400">{{ item.text }} : {{ $vuetify.theme.dark ? ' Dark' : ' Light' }}</span></v-list-item-title>
+              <v-list-item-title v-else-if="item.text === 'Logout'" @click="logout"><span class="fw-400">{{ item.text }}</span></v-list-item-title>
               <v-list-item-title v-else><span class="fw-400">{{ item.text }}</span></v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -96,6 +94,7 @@ export default {
         { text: 'Setting', icon: 'mdi-cog-outline' },
         { text: 'Help', icon: 'mdi-help-circle-outline' },
         { text: 'Send Feedback', icon: 'mdi-message-alert' },
+        { text: 'Logout', icon: 'mdi-logout' },
       ],
     };
   },
@@ -130,6 +129,10 @@ export default {
       }
     },
     goToHome() {
+      this.$router.push("/home")
+    },
+    logout(){
+      sessionStorage.clear();
       this.$router.push("/")
     }
   },

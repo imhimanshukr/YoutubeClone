@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <Navbar/>
+    <Navbar v-if="isLoggedIn"/>
     <div class="d-flex">
-      <Sidebar/>
+      <Sidebar v-if="isLoggedIn"/>
       <v-row :class="$vuetify.theme.dark ? 'dark-bg' : 'light-bg'">
         <v-col cols="12">
           <v-main class="main-container" :class="$vuetify.theme.dark ? 'dark-theme' : 'light-theme'">
@@ -30,10 +30,22 @@ export default {
       this.$vuetify.theme.dark = !this.$vuetify.theme.dark
     }
   },
+  computed:{
+		isLoggedIn(){
+      const loggedIn = sessionStorage.getItem("youtube-loggeedin");
+			if (!loggedIn && this.$route.path !== '/') {
+			this.$router.replace("/")
+			} else if (loggedIn && this.$route.path === '/') {
+			this.$router.replace("/home")
+			}
+			return loggedIn;
+		}
+},
   components:{
     Navbar,
     Sidebar,
-  }
+  },
+  
 };
 </script>
 

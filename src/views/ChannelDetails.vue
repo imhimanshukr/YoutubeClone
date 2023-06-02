@@ -94,10 +94,15 @@
                                 <p class="fsn-16 text-center my-16" v-else>This channel has not any post.</p>
                             </div>
                             <!-- Channel Details -->
-                            <p class="fsn-16 text-center my-16" v-show="item.tab === 'Channels'">Sorry, channel details are not available.</p>
-                                <!-- About -->
-                                <AboutTab v-show="item.tab === 'About'" :about="channelDetail" />
-                                </v-card>
+                            <div v-show="item.tab === 'Channels'">
+                                <p class="fsn-16 text-center my-16">Sorry, channel details are not available right now.</p>
+                            </div>
+                            <!-- About -->
+                            <div v-show="item.tab === 'About'">
+                                <p class="fsn-16 text-center my-16" v-if="!channelDetail">Unable to fetch data.</p>
+                                <AboutTab v-else :about="channelDetail" />
+                            </div>
+                            </v-card>
                             </v-tab-item>
                         </v-tabs-items>
                     </v-card>
@@ -138,12 +143,23 @@ export default {
             this.channelId = sessionStorage.getItem("channelId");
         }
         console.log("this.channelId: ", this.channelId);
-        this.fetchChannelDetail(this.channelId);
-        this.fetchChannelVideos(this.channelId);
-        this.fetchChannelCommunity(this.channelId);
+        // this.fetchChannelDetail(this.channelId);
+        // this.fetchChannelVideos(this.channelId);
+        // this.fetchChannelCommunity(this.channelId);
+        this.loadData();
     },
     methods: {
-        ...mapActions(["fetchChannelDetail", "fetchChannelVideos", "fetchChannelCommunity"])
+        ...mapActions(["fetchChannelDetail", "fetchChannelVideos", "fetchChannelCommunity"]),
+        async loadData() {
+        try {
+            await this.fetchChannelDetail(this.channelId);
+            await this.fetchChannelVideos(this.channelId);
+            await this.fetchChannelCommunity(this.channelId);
+        } catch (error) {
+        // Handle error if necessary
+        console.error(error);
+        }
+    },
     },
     computed: {
         channelDetail() {
