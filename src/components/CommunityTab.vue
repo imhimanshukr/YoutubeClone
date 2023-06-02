@@ -111,7 +111,8 @@ export default {
             this.$router.push({
                 name: "videoPlayer",
                 params: {
-                    id: videoId
+                    id: videoId,
+                    videoId
                 }
             })
         },

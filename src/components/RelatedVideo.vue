@@ -67,14 +67,16 @@ export default {
         playVideo(videoId){
             console.log("videoId: ", videoId);
             console.log("window.location.pathname: ", window.location.pathname);
-            window.location.pathname = `play-video/${videoId}`
+            // window.location.pathname = `play-video/${videoId}`
+            // window.location.reload()
             // console.log("wwww: ", window.location.pathname.split("/"));
-            // this.$router.push({
-            //     name: "videoPlayer",
-            //     params:{
-            //         id: videoId
-            //     }
-            // })
+            this.$router.push({
+                name: "videoPlayer",
+                params:{
+                    id: videoId,
+                    videoId
+                }
+            })
         }
     },
     computed: {

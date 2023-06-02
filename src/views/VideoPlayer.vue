@@ -215,7 +215,7 @@ import RealtedVideo from "../components/RelatedVideo.vue";
 
 export default {
     data: () => ({
-        videoId: null,
+        // videoId: null,
         showMoreDesc: false,
         showCommentBtn: false,
         userComment: null,
@@ -223,7 +223,14 @@ export default {
         isSubscribe: false,
     }),
     mounted() {
-        this.videoId = window.location.pathname.match(/play-video\/(.*)/)[1];
+        this.videoId = this.$route.params.videoId;
+        if (this.videoId) {
+            sessionStorage.setItem("videoId", this.videoId)
+        } else {
+            this.videoId = sessionStorage.getItem("videoId");
+        }
+        // this.videoId = window.location.pathname.match(/play-video\/(.*)/)[1];
+        // window.location.reload();
         console.log("videoId: ", this.videoId);
         this.fetchVideoDetail(this.videoId);
         this.fetchRelatedVideos(this.videoId);
@@ -295,6 +302,15 @@ export default {
         videoComments() {
             console.log("videoComments: ", this.$store.state.videoComments);
             return this.$store.state.videoComments;
+        },
+        videoId(){
+            let videoId = this.$route.params.videoId;
+        if (videoId) {
+            sessionStorage.setItem("videoId", videoId)
+        } else {
+            videoId = sessionStorage.getItem("videoId");
+        }
+        return videoId;
         }
     },
     components: {
