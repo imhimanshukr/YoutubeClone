@@ -32,7 +32,7 @@
 
       <v-menu left :offset-x=true :offset-y=true max-width="300">
         <template v-slot:activator="{ on, attrs }">
-            <v-avatar size="35" v-bind="attrs" v-on="on"><img
+            <v-avatar size="35" v-bind="attrs" v-on="on" class="ml-2"><img
                 src="https://lh3.googleusercontent.com/a/AGNmyxZ7qhL59QyDyrMQnr4OloKhOWgpWNeNXk3p1Y3Z"
                 alt="" /></v-avatar>
         </template>
