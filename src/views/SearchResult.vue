@@ -1,8 +1,9 @@
 <template>
-    <div class="scroll-vertical-hide v-height">
+    <div>
+    <div class="scroll-vertical-hide v-height" v-if="videoList.length > 0">
         <div class="d-flex mb-3 ml-2 ml-md-4" v-for="(item, index) in videoList" :key="index">
             <v-row v-if="!$vuetify.breakpoint.xs">
-                <v-col cols="4" @click="playVideo(item.video.videoId)">
+                <v-col cols="4" @click="playVideo(item.video.videoId)" v-if="item.video.thumbnails">
                     <v-img class="rounded-lg pointer" :src="item.video.thumbnails[0].url" :alt="item.video.title">
                         <span class="video-length">{{ formatVideoLength(item.video.lengthSeconds) }}</span>
                     </v-img>
@@ -46,6 +47,22 @@
             </v-row>
         </div>
     </div>
+    <div v-else>
+        <div v-for="item in 10" :key="item">
+            <v-row>
+                <v-col cols="4">
+                    <v-skeleton-loader
+                    type="image"
+                    ></v-skeleton-loader>
+                </v-col>
+                <v-col cols="8">
+                    <v-skeleton-loader
+                    type="list-item-avatar-three-line"
+                    ></v-skeleton-loader>
+                </v-col>
+            </v-row>
+        </div>    </div>
+</div>
 </template>
 
 <script>
@@ -63,7 +80,6 @@ export default {
         } else {
             this.searchQuery = sessionStorage.getItem("searchQuery");
         }
-        // this.searchQuery = window.location.pathname.match(/search-result\/(.*)/)[1].replaceAll("%20", " ");
         console.log("this.searchQuery: ", this.searchQuery);
     },
     methods: {

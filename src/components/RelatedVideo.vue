@@ -1,9 +1,10 @@
 <template>
     <div>
+    <div v-if="videoList.length > 0">
         <div class="d-flex mb-2" v-for="(item, index) in videoList" :key="index" @click="playVideo(item.video.videoId)">
             <v-row>
                 <v-col cols="5" class="pr-0">
-                    <v-img class="rounded-lg img-width pointer" :src="item.video.thumbnails[0].url" :alt="item.video.title">
+                    <v-img class="rounded-lg img-width pointer" :src="item.video.thumbnails.length > 0 ? item.video.thumbnails[item.video.thumbnails.length-1].url : ''" alt="">
                         <span class="video-length">{{ formatVideoLength(item.video.lengthSeconds) }}</span>
                     </v-img>
                 </v-col>
@@ -31,6 +32,23 @@
             </v-row>
             </div>
     </div>
+    <div v-else>
+        <div v-for="item in 10" :key="item">
+            <v-row>
+                <v-col cols="5">
+                    <v-skeleton-loader
+                    type="image" height="150"
+                    ></v-skeleton-loader>
+                </v-col>
+                <v-col cols="7">
+                    <v-skeleton-loader
+                    type="list-item-three-line"
+                    ></v-skeleton-loader>
+                </v-col>
+            </v-row>
+        </div>
+    </div>
+</div>
 </template>
 
 <script>
@@ -39,24 +57,31 @@ import moment from "moment";
 export default {
     methods: {
         formatVideoLength(lengthSeconds) {
-            const duration = moment.duration(lengthSeconds, "seconds");
-            const hours = Math.floor(duration.asHours());
+            if(lengthSeconds){
+                const duration = moment.duration(lengthSeconds, "seconds");
+                const hours = Math.floor(duration.asHours());
             const minutes = duration.minutes();
             const seconds = duration.seconds();
-            if (hours > 0) {
+            if (hours && hours > 0) {
                 return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
             } else {
                 return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
             }
+            }
+            return ""
         },
         formatCount(count) {
-            if (count >= 1000000) {
-                return (count / 1000000).toFixed(1) + "M";
-            } else if (count >= 1000) {
-                return (count / 1000).toFixed(0) + "K";
-            } else {
-                return count.toString();
+            if(count){
+
+                if (count >= 1000000) {
+                    return (count / 1000000).toFixed(1) + "M";
+                } else if (count >= 1000) {
+                    return (count / 1000).toFixed(0) + "K";
+                } else {
+                    return count.toString();
+                }
             }
+            return ""
         },
         textTruncate(text){
             if(text.length > 50){

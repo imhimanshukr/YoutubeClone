@@ -89,16 +89,17 @@ export default {
                 { title: "Help", icon1: "mdi-help-circle-outline", icon2: "mdi-help-circle", },
                 { title: "Send feedback", icon1: "mdi-email-outline", icon2: "mdi-email" },
             ],
-            currentQuery: "New",
+            currentQuery: "",
         };
     },
-    mounted() {
-        this.fetchVideos(this.currentQuery);
-        console.log("window.location.pathname: ", window.location.pathname);
-    },
+    // mounted() {
+    //     this.fetchVideos(this.currentQuery);
+    //     console.log("window.location.pathname: ", window.location.pathname);
+    // },
     methods: {
         ...mapActions(["fetchVideos"]),
         activeLink(title) {
+            this.$store.state.videos = [];
             this.currentQuery = title;
             this.fetchYoutubeVideos(title);
         },

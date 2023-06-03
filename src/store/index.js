@@ -66,16 +66,27 @@ export default new Vuex.Store({
     async fetchVideos({ commit }, query) {
       const response = await fetchDataFromApi(`search/?q=${query}`);
       console.log("videos: ", response.contents);
-        commit("setVideos", response.contents);
+      const videos = response.contents.filter((item) => item.video && item.type === 'video').map((item) => {
+        return{
+          ...item, type: 'video', video: { ...item.video }
+        }
+      });
+      console.log("123 videos: ", videos);
+        commit("setVideos", videos);
       
-      console.log("videos list: ", data.videos);
+      // console.log("videos list: ", data.videos);
       //   commit("setVideos", data.videos);
       //   commit("setFeedTitle", query);
     },
     async fetchRelatedVideos({commit}, videoId){
         const response = await fetchDataFromApi(`video/related-contents/?id=${videoId}`);
-        commit("setRelatedContent", response.contents);
-          console.log("related: ", response.contents);
+        const videos = response.contents.filter((item) => item.video && item.type === 'video').map((item) => {
+          return{
+            ...item, type: 'video', video: { ...item.video }
+          }
+        });
+        commit("setRelatedContent", videos);
+          console.log("related: ", videos);
 
       //   console.log("related: ", data.related, videoId);
       // commit("setRelatedContent", data.related);

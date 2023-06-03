@@ -8,20 +8,20 @@
                     ? 'dark-theme-primarytext'
                     : 'light-theme-primarytext'
                     ">
-                    {{ videoDetail.title }}
+                    {{ videoDetail.title ? videoDetail.title : "" }}
                 </h2>
                 <div class="d-flex flex-wrap mt-3 justify-space-between">
                     <div class="d-flex align-center justify-space-between head-w-100">
                         <div class="d-flex align-center">
                             <v-avatar class="h-9 w-9 rounded-full overflow-hidden mr-3 pointer" size="40" @click="viewChannel(videoDetail.author.channelId, videoDetail.author.canonicalBaseUrl)">
-                                <v-img :src="videoDetail.author.avatar[0].url" :alt="videoDetail.author.title" />
+                                <v-img :src="videoDetail.author.avatar[0].url" alt="" />
                             </v-avatar>
                             <div class="pointer" @click="viewChannel(videoDetail.author.channelId, videoDetail.author.canonicalBaseUrl)">
                                 <p class="fs-14 mb-0 nowrap fw-600" :class="$vuetify.theme.dark
                                     ? 'dark-theme-primarytext'
                                     : 'light-theme-primarytext'
                                     ">
-                                    {{ videoDetail.author.title }}
+                                    {{ videoDetail.author.title ? videoDetail.author.title : "" }}
                                     <v-icon v-if="videoDetail.author.badges.length > 0
                                         ? videoDetail.author.badges[0].type ===
                                         'VERIFIED_CHANNEL'
@@ -40,7 +40,7 @@
                             elevation="0" :class="$vuetify.theme.dark ? 'black--text' : 'white--text'" :color="$vuetify.theme.dark ? '#f2f2f2' : '#252525'" @click="isSubscribe = !isSubscribe">{{ isSubscribe ? 'Subscribeed' : 'Subscribe'}}</v-btn>
                     </div>
                     <div class="d-flex align-center head-w-100 justify-space-between">
-                        <v-btn-toggle v-model="toggle_exclusive" rounded :outlined="true">
+                        <v-btn-toggle rounded :outlined="true">
                             <v-btn max-height="3.6rem" class="like-btn" color="btnBg">
                                 <v-icon class="fs-20">mdi-thumb-up-outline</v-icon>
                                 <span class="ml-1 fs-14">{{
@@ -174,7 +174,7 @@
                     <div class="d-flex mt-4" v-for="(comment, index) in videoComments.comments" :key="index">
                         <v-avatar size="37" class="mr-4"><img :src="comment.author.avatar[0].url" alt=""></v-avatar>
                         <div style="width:95%;">
-                            <p class="fs-12 fw-500 mb-1">{{ comment.author.title }} <span class=" ml-1 fw-500" :class="$vuetify.theme.dark
+                            <p class="fs-12 fw-500 mb-1">{{ comment.author.title ? comment.author.title : "" }} <span class=" ml-1 fw-500" :class="$vuetify.theme.dark
                                 ? 'dark-theme-secondarytext'
                                 : 'light-theme-secondarytext'
                                 "> {{ comment.publishedTimeText }}</span></p>
@@ -239,13 +239,17 @@ export default {
     methods: {
         ...mapActions(["fetchVideoDetail", "fetchRelatedVideos", "fetchVideoComment"]),
         formatCount(count, comment) {
-            if (count >= 1000000) {
-                return (count / 1000000).toFixed(1) + "M";
+            if(count){
+
+                if (count >= 1000000) {
+                    return (count / 1000000).toFixed(1) + "M";
             } else if (count >= 1000 && !comment) {
                 return (count / 1000).toFixed(0) + "K";
             } else if (count >= 10000 && comment) {
                 return (count / 1000).toFixed(0) + "K";
             } else return count;
+        }
+        return ""
         },
         wrapDesc(desc) {
             if (typeof desc === "string") {
