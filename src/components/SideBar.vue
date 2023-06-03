@@ -44,17 +44,12 @@
     : 'min-height: 40px;'
     " @click="activeLink(item.title)">
                     <v-list-item-icon class="d-block mt-2 mb-0" :style="!$store.state.drawer ? 'margin-left: -5px' : ''">
-                        <v-icon color="primaryText" v-if="item.title === 'Logout'" @click="logout">{{ currentQuery ===
-                            item.name ? item.icon2 : item.icon1 }}</v-icon>
-                        <v-icon color="primaryText" v-else>{{ currentQuery === item.name ? item.icon2 : item.icon1
+                        <v-icon color="primaryText">{{ currentQuery === item.name ? item.icon2 : item.icon1
                         }}</v-icon>
                     </v-list-item-icon>
 
                     <v-list-item-content style="margin-left: -18px;margin-top: 2px;">
-                        <v-list-item-title class="fs-14" v-if="item.title === 'Logout'" @click="logout">{{
-                            item.title
-                        }}</v-list-item-title>
-                        <v-list-item-title class="fs-14" v-else>{{
+                        <v-list-item-title class="fs-14">{{
                             item.title
                         }}</v-list-item-title>
                     </v-list-item-content>
@@ -100,8 +95,12 @@ export default {
         ...mapActions(["fetchVideos"]),
         activeLink(title) {
             this.$store.state.videos = [];
-            this.currentQuery = title;
-            this.fetchYoutubeVideos(title);
+            if(title === 'Logout'){
+                this.logout();
+            }else{
+                this.currentQuery = title;
+                this.fetchYoutubeVideos(title);
+            }
         },
         fetchYoutubeVideos(query) {
             this.fetchVideos(query)

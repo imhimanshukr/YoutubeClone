@@ -13,10 +13,12 @@
                 <div class="d-flex flex-wrap mt-3 justify-space-between">
                     <div class="d-flex align-center justify-space-between head-w-100">
                         <div class="d-flex align-center">
-                            <v-avatar class="h-9 w-9 rounded-full overflow-hidden mr-3 pointer" size="40" @click="viewChannel(videoDetail.author.channelId, videoDetail.author.canonicalBaseUrl)">
+                            <v-avatar class="h-9 w-9 rounded-full overflow-hidden mr-3 pointer" size="40"
+                                @click="viewChannel(videoDetail.author.channelId, videoDetail.author.canonicalBaseUrl)">
                                 <v-img :src="videoDetail.author.avatar[0].url" alt="" />
                             </v-avatar>
-                            <div class="pointer" @click="viewChannel(videoDetail.author.channelId, videoDetail.author.canonicalBaseUrl)">
+                            <div class="pointer"
+                                @click="viewChannel(videoDetail.author.channelId, videoDetail.author.canonicalBaseUrl)">
                                 <p class="fs-14 mb-0 nowrap fw-600" :class="$vuetify.theme.dark
                                     ? 'dark-theme-primarytext'
                                     : 'light-theme-primarytext'
@@ -37,7 +39,9 @@
                             </div>
                         </div>
                         <v-btn max-width="10.5rem" max-height="3.6rem" class="ml-6 fs-12 rounded-xl text-capitalliz"
-                            elevation="0" :class="$vuetify.theme.dark ? 'black--text' : 'white--text'" :color="$vuetify.theme.dark ? '#f2f2f2' : '#252525'" @click="isSubscribe = !isSubscribe">{{ isSubscribe ? 'Subscribeed' : 'Subscribe'}}</v-btn>
+                            elevation="0" :class="$vuetify.theme.dark ? 'black--text' : 'white--text'"
+                            :color="$vuetify.theme.dark ? '#f2f2f2' : '#252525'" @click="isSubscribe = !isSubscribe">{{
+                                isSubscribe ? 'Subscribeed' : 'Subscribe' }}</v-btn>
                     </div>
                     <div class="d-flex align-center head-w-100 justify-space-between">
                         <v-btn-toggle rounded :outlined="true">
@@ -174,10 +178,11 @@
                     <div class="d-flex mt-4" v-for="(comment, index) in videoComments.comments" :key="index">
                         <v-avatar size="37" class="mr-4"><img :src="comment.author.avatar[0].url" alt=""></v-avatar>
                         <div style="width:95%;">
-                            <p class="fs-12 fw-500 mb-1">{{ comment.author.title ? comment.author.title : "" }} <span class=" ml-1 fw-500" :class="$vuetify.theme.dark
-                                ? 'dark-theme-secondarytext'
-                                : 'light-theme-secondarytext'
-                                "> {{ comment.publishedTimeText }}</span></p>
+                            <p class="fs-12 fw-500 mb-1">{{ comment.author.title ? comment.author.title : "" }} <span
+                                    class=" ml-1 fw-500" :class="$vuetify.theme.dark
+                                        ? 'dark-theme-secondarytext'
+                                        : 'light-theme-secondarytext'
+                                        "> {{ comment.publishedTimeText }}</span></p>
                             <p class="fs-14 mb-1">{{ comment.content }}</p>
                             <div class="d-flex align-center">
                                 <v-btn icon>
@@ -215,7 +220,6 @@ import RealtedVideo from "../components/RelatedVideo.vue";
 
 export default {
     data: () => ({
-        // videoId: null,
         showMoreDesc: false,
         showCommentBtn: false,
         userComment: null,
@@ -223,33 +227,43 @@ export default {
         isSubscribe: false,
     }),
     mounted() {
-        this.videoId = this.$route.params.videoId;
-        if (this.videoId) {
-            sessionStorage.setItem("videoId", this.videoId)
-        } else {
-            this.videoId = sessionStorage.getItem("videoId");
-        }
+        // this.videoId = this.$route.params.videoId;
+        // if (this.videoId) {
+        //     sessionStorage.setItem("videoId", this.videoId)
+        // } else {
+        //     this.videoId = sessionStorage.getItem("videoId");
+        // }
         // this.videoId = window.location.pathname.match(/play-video\/(.*)/)[1];
         // window.location.reload();
         console.log("videoId: ", this.videoId);
-        this.fetchVideoDetail(this.videoId);
-        this.fetchRelatedVideos(this.videoId);
-        this.fetchVideoComment(this.videoId);
+        // this.fetchVideoDetail(this.videoId);
+        // this.fetchRelatedVideos(this.videoId);
+        // this.fetchVideoComment(this.videoId); 
     },
     methods: {
         ...mapActions(["fetchVideoDetail", "fetchRelatedVideos", "fetchVideoComment"]),
+        async loadData() {
+            try {
+                await this.fetchVideoDetail(this.videoId);
+                await this.fetchRelatedVideos(this.videoId);
+                await this.fetchVideoComment(this.videoId);
+            }
+            catch (err) {
+                console.log("Err: ", err);
+            }
+        },
         formatCount(count, comment) {
-            if(count){
+            if (count) {
 
                 if (count >= 1000000) {
                     return (count / 1000000).toFixed(1) + "M";
-            } else if (count >= 1000 && !comment) {
-                return (count / 1000).toFixed(0) + "K";
-            } else if (count >= 10000 && comment) {
-                return (count / 1000).toFixed(0) + "K";
-            } else return count;
-        }
-        return ""
+                } else if (count >= 1000 && !comment) {
+                    return (count / 1000).toFixed(0) + "K";
+                } else if (count >= 10000 && comment) {
+                    return (count / 1000).toFixed(0) + "K";
+                } else return count;
+            }
+            return ""
         },
         wrapDesc(desc) {
             if (typeof desc === "string") {
@@ -288,15 +302,15 @@ export default {
             this.showCommentBtn = false;
             this.userComment = null;
         },
-        viewChannel(channelId, baseUrl){
-          console.log("baseUrl: ", baseUrl);
-          this.$router.push({
-            name: "channelDetails",
-            params:{
-              id: baseUrl.replace("/", ""),
-              channelId
-            }
-          })
+        viewChannel(channelId, baseUrl) {
+            console.log("baseUrl: ", baseUrl);
+            this.$router.push({
+                name: "channelDetails",
+                params: {
+                    id: baseUrl.replace("/", ""),
+                    channelId
+                }
+            })
         }
     },
     computed: {
@@ -307,15 +321,25 @@ export default {
             console.log("videoComments: ", this.$store.state.videoComments);
             return this.$store.state.videoComments;
         },
-        videoId(){
+        videoId() {
             let videoId = this.$route.params.videoId;
-        if (videoId) {
-            sessionStorage.setItem("videoId", videoId)
-        } else {
-            videoId = sessionStorage.getItem("videoId");
+            if (videoId) {
+                sessionStorage.setItem("videoId", videoId)
+            } else {
+                videoId = sessionStorage.getItem("videoId");
+            }
+            return videoId;
         }
-        return videoId;
-        }
+    },
+    watch: {
+        videoId: {
+            immediate: true,
+            handler(newVal) {
+                if (newVal) {
+                    this.loadData();
+                }
+            },
+        },
     },
     components: {
         LazyYoutube,
