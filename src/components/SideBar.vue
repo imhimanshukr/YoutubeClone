@@ -67,7 +67,7 @@ export default {
         return {
             drawer: true,
             itemsCategory: [
-                { title: "Home", icon1: "mdi-home-outline", icon2: "mdi-home", name: "Trending", to: "/" },
+                { title: "Home", icon1: "mdi-home-outline", icon2: "mdi-home", name: "new", to: "/" },
                 { title: "Shorts", icon1: "mdi-fire", icon2: "mdi-fire", name: "Shorts" },
                 { title: "Music", icon1: "mdi-music-note-outline", icon2: "mdi-music-note", name: "Music" },
                 { title: "Films", icon1: "mdi-movie-outline", icon2: "mdi-movie", name: "Films" },

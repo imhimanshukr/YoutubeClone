@@ -27,7 +27,7 @@ export default {
     name: "homePage",
     mounted(){
         if(this.$store.state.videos.length === 0){
-            this.fetchVideos("Trending");
+            this.fetchVideos("new");
         }
     },
     methods:{
