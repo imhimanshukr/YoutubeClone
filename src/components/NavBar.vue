@@ -21,16 +21,15 @@
       </v-autocomplete>
 
       <v-spacer></v-spacer>
-        <v-icon icon v-if="!$vuetify.breakpoint.xs">{{
-          $vuetify.theme.dark ? "mdi-video-plus" : "mdi-video-plus-outline"
-        }}</v-icon>
-        <v-icon class="mx-3" v-if="!$vuetify.breakpoint.xs">mdi-bell-outline</v-icon>
+      <v-icon icon v-if="!$vuetify.breakpoint.xs">{{
+        $vuetify.theme.dark ? "mdi-video-plus" : "mdi-video-plus-outline"
+      }}</v-icon>
+      <v-icon class="mx-3" v-if="!$vuetify.breakpoint.xs">mdi-bell-outline</v-icon>
 
       <v-menu left :offset-x=true :offset-y=true max-width="300">
         <template v-slot:activator="{ on, attrs }">
-            <v-avatar size="35" v-bind="attrs" v-on="on" class="ml-2"><img
-                src="https://lh3.googleusercontent.com/a/AGNmyxZ7qhL59QyDyrMQnr4OloKhOWgpWNeNXk3p1Y3Z"
-                alt="" /></v-avatar>
+          <v-avatar size="35" v-bind="attrs" v-on="on" class="ml-2"><img
+              src="https://lh3.googleusercontent.com/a/AGNmyxZ7qhL59QyDyrMQnr4OloKhOWgpWNeNXk3p1Y3Z" alt="" /></v-avatar>
         </template>
 
         <v-list dense>
@@ -46,33 +45,23 @@
               </v-list-item-title>
               <v-list-item-title>
                 <span class="fw-400">
-                himanshu@gmail.com
-              </span>
+                  himanshu@gmail.com
+                </span>
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
           <v-divider></v-divider>
-          <v-list-item-group
-          color="primary"
-        >
-          <v-list-item
-            v-for="(item, i) in items"
-            :key="i"
-            active-class="active-link"
-          >
-            <v-list-item-icon>
-              <v-icon v-text="item.icon" v-if="!item.text === 'Appearance'"></v-icon>
-              <v-icon v-text="item.icon" v-else-if="item.text === 'Logout'" @click="logout"></v-icon>
-              <v-icon v-text="item.icon" v-else @click="$vuetify.theme.dark = !$vuetify.theme.dark"></v-icon>
-            </v-list-item-icon>
+          <v-list-item-group color="primary">
+            <v-list-item v-for="(item, i) in items" :key="i" active-class="active-link" @click="listEvent(item.text)">
+              <v-list-item-icon>
+                <v-icon v-text="item.icon"></v-icon>
+              </v-list-item-icon>
 
-            <v-list-item-content>
-              <v-list-item-title v-if="item.text === 'Appearance'" @click="$vuetify.theme.dark = !$vuetify.theme.dark"><span class="fw-400">{{ item.text }} : {{ $vuetify.theme.dark ? ' Dark' : ' Light' }}</span></v-list-item-title>
-              <v-list-item-title v-else-if="item.text === 'Logout'" @click="logout"><span class="fw-400">{{ item.text }}</span></v-list-item-title>
-              <v-list-item-title v-else><span class="fw-400">{{ item.text }}</span></v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
+              <v-list-item-content>
+                <v-list-item-title><span class="fw-400">{{ item.text }}</span></v-list-item-title>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list-item-group>
         </v-list>
       </v-menu>
     </v-app-bar>
@@ -91,7 +80,7 @@ export default {
         { text: 'Appearance', icon: 'mdi-theme-light-dark' },
         { text: 'Location: India', icon: 'mdi-web' },
         { text: 'Language: British English', icon: 'mdi-translate' },
-        { text: 'Setting', icon: 'mdi-cog-outline' },
+        { text: 'Settings', icon: 'mdi-cog-outline' },
         { text: 'Help', icon: 'mdi-help-circle-outline' },
         { text: 'Send Feedback', icon: 'mdi-message-alert' },
         { text: 'Logout', icon: 'mdi-logout' },
@@ -131,10 +120,14 @@ export default {
     goToHome() {
       this.$router.push("/home")
     },
-    logout(){
-      sessionStorage.clear();
-      this.$router.push("/")
-    }
+    listEvent(text) {
+      if (text === 'Appearance') {
+        this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+      } else if (text === 'Logout') {
+        sessionStorage.clear();
+        this.$router.push("/")
+      }
+    },
   },
   watch: {
     search(query) {
@@ -171,6 +164,7 @@ export default {
   top: 62px !important;
   left: 1213px !important;
 }
+
 .active-link {
   background-color: transparent !important;
 }
