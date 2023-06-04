@@ -12,7 +12,7 @@
         @click="goToHome">
       <v-spacer></v-spacer>
 
-      <v-autocomplete :items="$store.state.autoCompleteData" :search-input.sync="search" clearable dense
+      <v-autocomplete :items="autoData" :search-input.sync="search" clearable dense
         :outlined="!$vuetify.breakpoint.xs" rounded hide-details hide-no-data hide-selected
         :filled="$vuetify.breakpoint.xs" placeholder="Search" @change="selectSearchItem">
         <template #append>
@@ -58,7 +58,8 @@
               </v-list-item-icon>
 
               <v-list-item-content>
-                <v-list-item-title><span class="fw-400">{{ item.text }}</span></v-list-item-title>
+                <v-list-item-title v-if="item.text === 'Appearance'"><span class="fw-400">{{ item.text }} : {{ $vuetify.theme.dark ? 'Dark' : 'Light' }}</span></v-list-item-title>
+                <v-list-item-title v-else><span class="fw-400">{{ item.text }}</span></v-list-item-title>
               </v-list-item-content>
             </v-list-item>
           </v-list-item-group>
@@ -70,6 +71,7 @@
 
 <script>
 import { mapActions } from "vuex";
+import { debounce } from "lodash";
 
 export default {
   data() {
@@ -90,6 +92,7 @@ export default {
   methods: {
     ...mapActions(["fetchAutoCompleteSearch", "fetchVideos"]),
     selectSearchItem(event) {
+      this.$store.state.videos = [];
       console.log("eve: ", event);
       this.fetchVideos(event);
       if (window.location.pathname !== "/search-result") {
@@ -104,6 +107,7 @@ export default {
       }
     },
     handleSearch() {
+      this.$store.state.videos = [];
       console.log("eve: ", this.searchInput);
       this.fetchVideos(this.searchInput);
       if (window.location.pathname !== "/search-result") {
@@ -129,15 +133,29 @@ export default {
       }
     },
   },
+  computed:{
+    autoData(){
+      return this.$store.state.autoCompleteData
+    }
+  },
   watch: {
-    search(query) {
+    // search(query) {
+    //   this.searchInput = query;
+    //   console.log("query: ", query);
+    //   if (query?.length > 3) {
+    //     this.fetchAutoCompleteSearch(query);
+    //     console.log("$store.state.autoCompleteData: ", this.$store.state.autoCompleteData);
+    //   }
+    // },
+    // eslint-disable-next-line no-undef
+    search: debounce(function (query) {
       this.searchInput = query;
-      console.log("query: ", query);
-      if (query?.length > 3) {
+      if ( query && query.length > 3) {
         this.fetchAutoCompleteSearch(query);
-        console.log("$store.state.autoCompleteData: ", this.$store.state.autoCompleteData);
+      } else {
+        this.$store.state.autoCompleteData = [];
       }
-    },
+    }, 1000),
   },
 };
 </script>

@@ -6,7 +6,8 @@
       <v-row :class="$vuetify.theme.dark ? 'dark-bg' : 'light-bg'">
         <v-col cols="12">
           <v-main class="main-container" :class="$vuetify.theme.dark ? 'dark-theme' : 'light-theme'">
-            <router-view/>
+            <p class="red--text text-center" style="font-size: 25px;" v-if="respMessage && respMessage.includes('You have exceeded the')">{{ respMessage }}</p>
+            <router-view v-else/>
           </v-main>
         </v-col>
       </v-row>
@@ -39,7 +40,10 @@ export default {
 			this.$router.replace("/home")
 			}
 			return loggedIn;
-		}
+		},
+    respMessage(){
+      return this.$store.state.respMessage;
+    }
 },
   components:{
     Navbar,
