@@ -92,7 +92,6 @@ export default {
   methods: {
     ...mapActions(["fetchAutoCompleteSearch", "fetchVideos"]),
     selectSearchItem(event) {
-      this.$store.state.videos = [];
       console.log("eve: ", event);
       this.fetchVideos(event);
       if (window.location.pathname !== "/search-result") {
@@ -107,7 +106,6 @@ export default {
       }
     },
     handleSearch() {
-      this.$store.state.videos = [];
       console.log("eve: ", this.searchInput);
       this.fetchVideos(this.searchInput);
       if (window.location.pathname !== "/search-result") {
